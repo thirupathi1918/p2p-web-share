@@ -17,7 +17,7 @@
 
 | Service | URL |
 |---|---|
-| **Frontend (React UI)** | `https://p2p-web-share-frontend.vercel.app` *(Replace with your live Vercel URL)* |
+| **Frontend (React UI)** | https://p2p-web-share-gamma.vercel.app/ |
 | **Backend (Signaling Server)** | https://p2p-web-share-backend-qiri.onrender.com |
 
 ---
