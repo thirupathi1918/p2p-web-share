@@ -144,7 +144,7 @@ export default function App() {
         peerConnectionsRef.current[peerId].pc.close();
         delete peerConnectionsRef.current[peerId];
       }
-      setConnectionStatus('Connection Dropped! Waiting for recovery auto-resume sync..._');
+      setConnectionStatus('Connection Dropped! Waiting for recovery auto-resume sync...');
     });
 
     // RECEIVER INITIALIZATION: Process URL share tokens and cryptographic key material hashes
@@ -203,7 +203,21 @@ export default function App() {
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' }
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+        { urls: 'stun:stun3.l.google.com:19302' },
+        { urls: 'stun:stun4.l.google.com:19302' },
+        // Production Turn servers to route signals flawlessly across restricted cellular networks
+        {
+          urls: 'turn:openrelay.metered.ca:443',
+          username: 'openrelayproject',
+          credential: 'openrelayproject'
+        },
+        {
+          urls: 'turn:openrelay.metered.ca:80',
+          username: 'openrelayproject',
+          credential: 'openrelayproject'
+        }
       ],
       iceCandidatePoolSize: 10
     });
@@ -617,6 +631,8 @@ export default function App() {
                     onChange={(e) => {
                       if (e.target.files) setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
                     }}
+                    // 📱 MOBILE FILE MANAGEMENT FIX: Force smartphone filesystems over image galleries
+                    accept="*/*"
                     style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer', zIndex: 10 }}
                   />
                   <span style={{ fontSize: '32px', marginBottom: '8px', color: files.length > 0 ? '#10b981' : '#a1a1aa' }}>🛡️</span>
